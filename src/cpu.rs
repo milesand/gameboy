@@ -141,3 +141,43 @@ impl Registers {
         *self.af.as_lo() & flag == flag
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn u8_pair_get() {
+        let mut u8_pair = U8Pair::from_u16(0xa1b2);
+        assert_eq!(*u8_pair.as_u16(), 0xa1b2);
+        assert_eq!(*u8_pair.as_hi(), 0xa1);
+        assert_eq!(*u8_pair.as_lo(), 0xb2);
+    }
+
+    #[test]
+    fn u8_pair_set_u16() {
+        let mut u8_pair = U8Pair::from_u16(0xa1b2);
+        *u8_pair.as_u16() = 0xc3d4;
+        assert_eq!(*u8_pair.as_u16(), 0xc3d4);
+        assert_eq!(*u8_pair.as_hi(), 0xc3);
+        assert_eq!(*u8_pair.as_lo(), 0xd4);
+    }
+
+    #[test]
+    fn u8_pair_set_hi() {
+        let mut u8_pair = U8Pair::from_u16(0xa1b2);
+        *u8_pair.as_hi() = 0xe5;
+        assert_eq!(*u8_pair.as_u16(), 0xe5b2);
+        assert_eq!(*u8_pair.as_hi(), 0xe5);
+        assert_eq!(*u8_pair.as_lo(), 0xb2);
+    }
+
+    #[test]
+    fn u8_pair_set_lo() {
+        let mut u8_pair = U8Pair::from_u16(0xa1b2);
+        *u8_pair.as_lo() = 0xf6;
+        assert_eq!(*u8_pair.as_u16(), 0xa1f6);
+        assert_eq!(*u8_pair.as_hi(), 0xa1);
+        assert_eq!(*u8_pair.as_lo(), 0xf6);
+    }
+}
