@@ -34,6 +34,10 @@ union U8Pair {
 }
 
 impl U8Pair {
+    fn from_u16(value: u16) -> Self {
+        U8Pair { whole: value }
+    }
+
     fn as_u16(&mut self) -> &mut u16 {
         unsafe { &mut self.whole }
     }
