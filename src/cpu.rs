@@ -66,6 +66,20 @@ impl U8Pair {
 }
 
 impl Registers {
+    /// Create a new register set, with initial values for Gameboy Color
+    /// according to AntonioND's [The Cycle-Accurate Game Boy Docs]
+    /// (https://github.com/AntonioND/giibiiadvance/blob/master/docs/TCAGBD.pdf).
+    pub fn new_gbc() -> Self {
+        Registers {
+            af: U8Pair::from_u16(0x1180),
+            bc: U8Pair::from_u16(0x0000),
+            de: U8Pair::from_u16(0x0008),
+            hl: U8Pair::from_u16(0x007c),
+            sp: 0xfffe,
+            pc: 0x0100,
+        }
+    }
+
     /// Returns a reference to the `a` register.
     pub fn a(&mut self) -> &mut u8 {
         self.af.as_hi()
